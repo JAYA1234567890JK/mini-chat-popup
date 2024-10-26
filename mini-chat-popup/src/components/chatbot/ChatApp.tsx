@@ -6,6 +6,8 @@ import PersonIcon from "@mui/icons-material/Person";
 import RobotIcon from "@mui/icons-material/Android";
 import SendIcon from "@mui/icons-material/Send";
 import "./chat.css";
+
+// Interface for each chat message
 interface Message {
   text: string;
   sender: "user" | "bot";
@@ -19,6 +21,7 @@ const ChatApp: React.FC = () => {
   const [isClosing, setIsClosing] = useState(false);
   const [isTyping, setIsTyping] = useState(false);
 
+   // Toggles chat window open/close state with animation for closing
   const toggleChatWindow = () => {
     if (isOpen) {
       setIsClosing(true);
@@ -31,6 +34,7 @@ const ChatApp: React.FC = () => {
     }
   };
 
+  // Handles sending a message from the user
   const sendMessage = () => {
     if (input.trim()) {
       const userMessage: Message = {
@@ -41,17 +45,22 @@ const ChatApp: React.FC = () => {
       setChatHistory((prev) => [...prev, userMessage]);
       setInput("");
       setIsTyping(true);
+
+      // Simulate bot's delayed response
+
       setTimeout(() => {
         const botMessage: Message = {
-          text: generateBotResponse(),
+          text: generateBotResponse(), // Generate random response for bot
           sender: "bot",
           timestamp: Date.now(),
         };
-        setChatHistory((prev) => [...prev, botMessage]);
+        setChatHistory((prev) => [...prev, botMessage]); // Add bot's response to chat history
         setIsTyping(false);
-      }, 1000);
+      }, 1000);  // 1-second delay for bot response
     }
   };
+
+  // Generates a random response from the bot
 
   const generateBotResponse = () => {
     const responses = [
@@ -63,6 +72,8 @@ const ChatApp: React.FC = () => {
     ];
     return responses[Math.floor(Math.random() * responses.length)];
   };
+
+// Formats timestamp to display how much time ago a message was sent
 
   const formatTimestamp = (timestamp: number) => {
     const now = Date.now();
@@ -91,6 +102,7 @@ const ChatApp: React.FC = () => {
             flexDirection: "column",
           }}
         >
+        {/* chat header with close button */}
           <Box
             sx={{
               display: "flex",
@@ -119,6 +131,7 @@ const ChatApp: React.FC = () => {
             }}
           >
             {chatHistory.map((message, index) => (
+              // Individual message box styling based on sender (user/bot)
               <Box
                 key={index}
                 sx={{
@@ -148,6 +161,7 @@ const ChatApp: React.FC = () => {
               </Box>
             ))}
             {isTyping && (
+              // Bot typing indicator
               <Box sx={{ display: "flex", alignItems: "center" }}>
                 <RobotIcon sx={{ marginRight: 1 }} />{" "}
                 <Typography
@@ -159,6 +173,8 @@ const ChatApp: React.FC = () => {
               </Box>
             )}
           </Box>
+        
+          {/* Input field and send button */}
 
           <Box
             sx={{
@@ -188,6 +204,9 @@ const ChatApp: React.FC = () => {
           </Box>
         </Box>
       ) : (
+
+        // Floating chat button
+        
         <Button
           className="chat-button"
           onClick={toggleChatWindow}
