@@ -1,0 +1,43 @@
+@keyframes rotateIn {
+    0% {
+      transform: rotate(30deg);
+      opacity: 0;
+    }
+    100% {
+      transform: rotate(0deg);
+      opacity: 1;
+    }
+  }
+  
+  @keyframes rotateOut {
+    0% {
+      transform: rotate(0deg);
+      opacity: 1;
+    }
+    100% {
+      transform: rotate(30deg);
+      opacity: 0;
+    }
+  }
+  
+  .chat-window {
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+  
+  .chat-window.open {
+    animation: rotateIn 0.5s ease forwards; 
+  }
+  
+  .chat-window.close {
+    animation: rotateOut 0.5s ease forwards; 
+    opacity: 1; 
+  }
+  
+  .chat-button {
+    transition: transform 0.3s ease;
+  }
+  
+  .chat-button:hover {
+    transform: scale(1.1);
+  }
+  
